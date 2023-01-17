@@ -1,0 +1,9 @@
+.pushmenu { position: fixed; left: 255px; }
+.navbar .ml-auto li{ margin: 0 6px;}
+.layout-fixed .main-sidebar {
+   position: fixed;
+   float: none;
+   top: unset;
+   bottom: unset; 
+   left: 0;
+}                                                                                             
