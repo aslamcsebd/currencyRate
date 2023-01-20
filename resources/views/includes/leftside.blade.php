@@ -6,13 +6,13 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link" data-toggle="modal" data-original-title="test" data-target="#smallModal">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>CVS import</p>
+                        <p>CSV import</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>CVS History</p>
+                        <p>CSV History</p>
                     </a>
                 </li>
                 <li class="nav-item">

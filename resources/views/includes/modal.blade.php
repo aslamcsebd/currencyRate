@@ -3,18 +3,18 @@
    <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title text-center" id="exampleModalLabel">Only CVS file</h5>
+            <h5 class="modal-title text-center" id="exampleModalLabel">Only CSV file</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
          </div>
          <div class="modal-body">
-            <form action="{{ url('csv_import') }}" method="post" class="needs-validation" >
+            <form action="{{ url('csv_import') }}" method="post" class="needs-validation" enctype="multipart/form-data">
                 @csrf
                 <div class="row justify-content-center">
                     <div class="form-group col-md-8">
-                       <input type="file" class="form-control cvsFile" id="image" name="csv_import" required>
+                       <input type="file" class="form-control csvFile" id="csv_file" name="csv_file" required>
                     </div>
                     <div class="form-group col-md-4">
-                       <button class="btn btn-sm btn-success btn-block py-2">Input CVS file</button>
+                       <button class="btn btn-sm btn-success btn-block py-2">Input CSV file</button>
                     </div>
                 </div>
             </form>

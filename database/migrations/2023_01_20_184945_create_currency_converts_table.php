@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCurrencyDataTable extends Migration
+class CreateCurrencyConvertsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateCurrencyDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('currency_data', function (Blueprint $table) {
+        Schema::create('currency_converts', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date');
-            $table->string('user_id');
+            $table->string('date')->nullable();
+            $table->string('user_id')->nullable();
             $table->string('client_type')->nullable();
-            $table->float('amount', 8, 2);
+            $table->string('amount')->nullable();
             $table->string('operation_type')->nullable();
-            $table->string('currency');
+            $table->string('currency')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateCurrencyDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currency_data');
+        Schema::dropIfExists('currency_converts');
     }
 }

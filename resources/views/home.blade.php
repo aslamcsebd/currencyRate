@@ -4,6 +4,24 @@
 @include('includes.alertMessage')
 
     <div class="content-wrapper p-4">
+
+
+    <div class="modal-body">
+            <form action="{{ url('csv_import') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="row justify-content-center">
+                    <div class="form-group col-md-8">
+                       <input type="file" class="form-control csvFile" id="csv_file" name="csv_file" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                       <button class="btn btn-sm btn-success btn-block py-2">Input CSV file</button>
+                    </div>
+                </div>
+            </form>
+         </div>
+
+
+
         <h4 class="text-center">Date : {{date('Y-m-d')}}</h4>
         @if(isset($todayCurrency))
             <table id="table" class="table table-bordered table-hover text-center">

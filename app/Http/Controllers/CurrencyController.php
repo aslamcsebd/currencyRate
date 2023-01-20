@@ -4,49 +4,62 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
+
+use App\Models\CurrencyConvert;
 
 class CurrencyController extends Controller {
 
     public function csv_import(Request $request){
 
-        $validator = Validator::make($request->all(),[
-            'csv_import' => 'required|mimes:csv'
-         ]);
-         //Maximum file size: 10 MB.
 
-         if($validator->fails()){
+
+        $validator = Validator::make($request->all(),[
+            'csv_file' => 'required|mimes:csv'
+        ]);
+
+        if($validator->fails()){
             $messages = $validator->messages();
             return Redirect::back()->withErrors($validator);
-         }
+        }
 
+        $path="CSV_File/";
+        if ($request->hasFile('csv_file')){
+            if($files=$request->file('csv_file')){
 
-        $path="files/";
-      if ($request->hasFile('file')){
-         if($files=$request->file('file')){
-            $file = $request->file;
-            $fullName=time().".".$file->getClientOriginalExtension();
-            $files->move(public_path($path), $fullName);
-            $fileLink = $path . $fullName;
-         }
-      }else{
-         $fileLink = '';
-      }
+                $fullName = $request->file('csv_file')->getClientOriginalName();
 
-      $fileId = File::insertGetId([
-         'created_by' => Auth::user()->name,
-         'name' => $request->name,
-         'file' => $fileLink
-      ]);
+                $files->move(public_path($path), $fullName);
+                $fileLink = $path . $fullName;
+            }
+        }
 
-
-        return back();
-        $path = $request->file('csv')->getRealPath();
+        $path = $request->file('csv_file')->getRealPath();
         $data = array_map('str_getcsv', file($path));
 
-        $csv_data = $data;
-        // $csv_data = array_slice($data, 0, 2);
-        return view('home', compact('csv_data'));
+        foreach($data as $value){
+            $today = date('Y-m-d');
+            $day = $value[0];
+
+            if($today==$day){
+                CurrencyConvert::create([
+                    'date'  => $value[0],
+                    'user_id'   => $value[1],
+                    'client_type'   => $value[2],
+                    'amount'     => $value[3],
+                    'operation_type'    => $value[4],
+                    'currency'  => $value[5]
+                ]);
+            }else{
+                CurrencyConvert::create([
+                    'date'  => 'This is invali date'
+                ]);
+            }
+        }
+
+
+        // return view('home', compact('csv_data'));
     }
 
 }
