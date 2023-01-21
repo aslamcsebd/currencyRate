@@ -5,7 +5,7 @@
 
     <div class="content-wrapper p-4">
 
-        <h4 class="text-center">Commission rate</h4>
+        <h4 class="text-center">Commission rate (%)</h4>
         @if(isset($rates))
             <table id="table" class="table table-bordered table-hover text-center">
                 <thead class="bg-info">

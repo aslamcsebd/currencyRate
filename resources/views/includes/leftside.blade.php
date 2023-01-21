@@ -10,9 +10,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('export') }}" class="nav-link {{ (request()->routeIs('export*'))  ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>CSV History</p>
+                        <p>CSV export</p>
                     </a>
                 </li>
                 <li class="nav-item">

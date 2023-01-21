@@ -12,6 +12,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/commission-rate', [App\Http\Controllers\CurrencyController::class, 'commission_rate'])->name('commission_rate');
 Route::post('/csv_import', [App\Http\Controllers\CurrencyController::class, 'csv_import'])->name('csv_import');
 
+Route::get('/export', [App\Http\Controllers\CurrencyController::class, 'export'])->name('export');
+
 Route::get('/clear', function() {
     Artisan::call('cache:clear');
     Artisan::call('config:clear');

@@ -11,6 +11,9 @@ use App\Models\CurrencyHistory;
 use App\Models\CurrencyConvert;
 use App\Models\CommissionRate;
 
+use App\Exports\CSVExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class CurrencyController extends Controller {
 
     public function csv_import(Request $request){
@@ -40,7 +43,6 @@ class CurrencyController extends Controller {
             $commission = $total * $percentage->percentage;
             $subTotal = $total - $commission;
 
-
             if($today==$day){
                 CurrencyConvert::create([
                     'date'          => $value[0],
@@ -56,12 +58,12 @@ class CurrencyController extends Controller {
                 CurrencyConvert::create([
                     'date'          => 'Invalid date',
                     'user_id'       => '-----',
-                    'client_type'   => '---------',
-                    'operation_type'=> '---------',
-                    'amount'        => '---------',
-                    'currency'      => '---------',
-                    'total'         => '---------',
-                    'commission'    => '---------'
+                    'client_type'   => '-----',
+                    'operation_type'=> '-----',
+                    'amount'        => '-----',
+                    'currency'      => '-----',
+                    'total'         => '-----',
+                    'commission'    => '-----'
                 ]);
             }
         }
@@ -77,13 +79,23 @@ class CurrencyController extends Controller {
             }
         }
 
-        return back();
-    }
+        /*
+        $onlyName = pathinfo($fullName, PATHINFO_FILENAME);
+        $CSV_output = CurrencyConvert::select('date', 'amount', 'currency', 'total', 'commission')->get();
+        return Excel::download(new CSVExport($CSV_output), $onlyName.'_output.csv');
+        */
 
+        return back();
+
+    }
 
     public function commission_rate(){
         $data['rates'] = CommissionRate::all();
         return view('pages.commission-rate', $data);
     }
 
+    public function export(){
+        $CSV_output = CurrencyConvert::select('date', 'amount', 'currency', 'total', 'commission')->get();
+        return Excel::download(new CSVExport($CSV_output), 'output.csv');
+    }
 }
