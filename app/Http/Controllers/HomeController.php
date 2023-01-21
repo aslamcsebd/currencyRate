@@ -23,13 +23,13 @@ class HomeController extends Controller {
             foreach($todayCurrency['rates'] as $name => $value){
                 CurrencyHistory::create([
                    'date' => $today,
-                   'currency_name' => $name,
-                   'rates' => $value
+                   'currency' => $name,
+                   'rate' => $value
                 ]);
             }
             $todayCurrency = CurrencyHistory::where('date', $today)->get();
         }
-        
+
         return view('home', compact('todayCurrency'));
     }
 }

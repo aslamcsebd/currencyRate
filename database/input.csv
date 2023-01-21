@@ -1,10 +1,10 @@
-2014-12-31,4,private,withdraw,1200.00,EUR
-2015-01-01,4,private,withdraw,1000.00,EUR
-2016-01-05,4,private,withdraw,1000.00,EUR
-2016-01-05,1,private,deposit,200.00,EUR
-2016-01-06,2,business,withdraw,300.00,EUR
+2023-01-21,1,Private,withdraw,1200.00,AED
+2023-01-21,2,Business,withdraw,1500.00,USD
+2023-01-21,3,private,Withdraw,1100.00,EUR
+2023-01-21,4,business,Deposit,1300.00,USD
+2023-01-21,5,business,withdraw,300.00,EUR
 2016-01-06,1,private,withdraw,30000,JPY
-2016-01-07,1,private,withdraw,1000.00,EUR
+2023-01-21,1,private,withdraw,1000.00,EUR
 2016-01-07,1,private,withdraw,100.00,USD
 2016-01-10,1,private,withdraw,100.00,EUR
 2016-01-10,2,business,deposit,10000.00,EUR

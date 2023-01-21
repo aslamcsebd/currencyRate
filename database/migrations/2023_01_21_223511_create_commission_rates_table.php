@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCurrencyHistoriesTable extends Migration
+class CreateCommissionRatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateCurrencyHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currency_histories', function (Blueprint $table) {
+        Schema::create('commission_rates', function (Blueprint $table) {
             $table->id();
-            $table->string('date');
-            $table->string('currency');
-            $table->string('rate');
+            $table->string('client_type')->nullable();
+            $table->string('operation_type')->nullable();
+            $table->string('percentage')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateCurrencyHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currency_histories');
+        Schema::dropIfExists('commission_rates');
     }
 }

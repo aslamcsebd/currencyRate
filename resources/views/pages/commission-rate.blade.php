@@ -5,20 +5,22 @@
 
     <div class="content-wrapper p-4">
 
-        <h4 class="text-center">Date : {{date('Y-m-d')}}</h4>
-        @if(isset($todayCurrency))
+        <h4 class="text-center">Commission rate</h4>
+        @if(isset($rates))
             <table id="table" class="table table-bordered table-hover text-center">
                 <thead class="bg-info">
                     <th>SL</th>
-                    <th>Name</th>
-                    <th>Rate</th>
+                    <th>Client type</th>
+                    <th>Operation type</th>
+                    <th>Percentage</th>
                 </thead>
                 <tbody>
-                    @foreach($todayCurrency as $currency)
+                    @foreach($rates as $rate)
                         <tr>
                             <td width="5">{{ $loop->iteration }}</td>
-                            <td>{{ $currency->currency }}</td>
-                            <td>{{ $currency->rate }}</td>
+                            <td>{{ $rate->client_type }}</td>
+                            <td>{{ $rate->operation_type }}</td>
+                            <td>{{ $rate->percentage*100 }}%</td>
                         </tr>
                     @endforeach
                 </tbody>

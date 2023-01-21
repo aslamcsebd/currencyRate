@@ -18,9 +18,12 @@ class CreateCurrencyConvertsTable extends Migration
             $table->string('date')->nullable();
             $table->string('user_id')->nullable();
             $table->string('client_type')->nullable();
-            $table->string('amount')->nullable();
             $table->string('operation_type')->nullable();
+            $table->string('amount')->nullable();
             $table->string('currency')->nullable();
+            $table->string('total')->nullable();
+            $table->string('commission')->nullable();
+
             $table->timestamps();
         });
     }

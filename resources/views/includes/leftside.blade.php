@@ -21,6 +21,12 @@
                         <p>Today's currency rate</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('commission_rate') }}" class="nav-link {{ (request()->routeIs('commission_rate*'))  ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Commission rate</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

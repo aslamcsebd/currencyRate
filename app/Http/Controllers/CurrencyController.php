@@ -7,13 +7,13 @@ use Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
+use App\Models\CurrencyHistory;
 use App\Models\CurrencyConvert;
+use App\Models\CommissionRate;
 
 class CurrencyController extends Controller {
 
     public function csv_import(Request $request){
-
-
 
         $validator = Validator::make($request->all(),[
             'csv_file' => 'required|mimes:csv'
@@ -24,7 +24,49 @@ class CurrencyController extends Controller {
             return Redirect::back()->withErrors($validator);
         }
 
-        $path="CSV_File/";
+        $path = $request->file('csv_file')->getRealPath();
+        $data = array_map('str_getcsv', file($path));
+
+        CurrencyConvert::truncate();
+
+        foreach($data as $value){
+            $today = date('Y-m-d');
+            $day = $value[0];
+
+            $rate = CurrencyHistory::where('date', $today)->where('currency', $value[5])->first();
+            $percentage = CommissionRate::where('client_type', $value[2])->where('operation_type', $value[3])->first();
+
+            $total = $value[4] * $rate->rate;
+            $commission = $total * $percentage->percentage;
+            $subTotal = $total - $commission;
+
+
+            if($today==$day){
+                CurrencyConvert::create([
+                    'date'          => $value[0],
+                    'user_id'       => $value[1],
+                    'client_type'   => $value[2],
+                    'operation_type' => $value[3],
+                    'amount'        => $value[4],
+                    'currency'      => $value[5],
+                    'total'         => round($subTotal, 2),
+                    'commission'    => round($commission, 2)
+                ]);
+            }else{
+                CurrencyConvert::create([
+                    'date'          => 'Invalid date',
+                    'user_id'       => '-----',
+                    'client_type'   => '---------',
+                    'operation_type'=> '---------',
+                    'amount'        => '---------',
+                    'currency'      => '---------',
+                    'total'         => '---------',
+                    'commission'    => '---------'
+                ]);
+            }
+        }
+
+        $path="CSV_File/input";
         if ($request->hasFile('csv_file')){
             if($files=$request->file('csv_file')){
 
@@ -35,31 +77,13 @@ class CurrencyController extends Controller {
             }
         }
 
-        $path = $request->file('csv_file')->getRealPath();
-        $data = array_map('str_getcsv', file($path));
-
-        foreach($data as $value){
-            $today = date('Y-m-d');
-            $day = $value[0];
-
-            if($today==$day){
-                CurrencyConvert::create([
-                    'date'  => $value[0],
-                    'user_id'   => $value[1],
-                    'client_type'   => $value[2],
-                    'amount'     => $value[3],
-                    'operation_type'    => $value[4],
-                    'currency'  => $value[5]
-                ]);
-            }else{
-                CurrencyConvert::create([
-                    'date'  => 'This is invali date'
-                ]);
-            }
-        }
+        return back();
+    }
 
 
-        // return view('home', compact('csv_data'));
+    public function commission_rate(){
+        $data['rates'] = CommissionRate::all();
+        return view('pages.commission-rate', $data);
     }
 
 }
