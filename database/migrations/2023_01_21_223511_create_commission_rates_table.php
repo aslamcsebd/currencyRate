@@ -20,6 +20,22 @@ class CreateCommissionRatesTable extends Migration
             $table->string('percentage')->nullable();
             $table->timestamps();
         });
+
+        $rates =
+            [
+                [1, 'private', 'withdraw', '0.003'],
+                [2, 'private', 'deposit', '0.0003'],
+                [3, 'business', 'withdraw', '0.005'],
+                [4, 'business', 'deposit', '0.0003']
+            ];
+
+        foreach($rates as $rate){
+            DB::table('commission_rates')->insert([
+                'client_type' => $rate[1],
+                'operation_type' => $rate[2],
+                'percentage' => $rate[3]
+            ]);
+        }
     }
 
     /**
