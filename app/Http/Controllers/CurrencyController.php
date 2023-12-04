@@ -17,7 +17,6 @@ use Maatwebsite\Excel\Facades\Excel;
 class CurrencyController extends Controller {
 
     public function csv_import(Request $request){
-
         $validator = Validator::make($request->all(),[
             'csv_file' => 'required|mimes:csv'
         ]);
@@ -86,7 +85,6 @@ class CurrencyController extends Controller {
         */
 
         return back();
-
     }
 
     public function commission_rate(){
@@ -97,5 +95,9 @@ class CurrencyController extends Controller {
     public function export(){
         $CSV_output = CurrencyConvert::select('date', 'amount', 'currency', 'total', 'commission')->get();
         return Excel::download(new CSVExport($CSV_output), 'output.csv');
+    }
+
+	public function doct(){
+        return view('pages.doct');
     }
 }

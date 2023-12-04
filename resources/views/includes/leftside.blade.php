@@ -27,6 +27,12 @@
                         <p>Commission rate</p>
                     </a>
                 </li>
+				<li class="nav-item">
+                    <a href="{{ route('doct') }}" class="nav-link {{ (request()->routeIs('doct*'))  ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Project documentation</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
